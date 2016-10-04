@@ -29,6 +29,10 @@ namespace Parse
             if (PRINT_MESSAGES) { Console.WriteLine(o); }
         }
 
+        /**
+         * TODO: this thing isn't eating whitespace properly, especially 
+         * line breaks or multiple space chars.
+         */
         private bool isWhiteSpace(int ch) 
         {
             bool result = Char.IsWhiteSpace((Char) ch);
@@ -41,6 +45,49 @@ namespace Parse
             bool result = (ch == ';');
             if (result) { printDebugMsg("Semicolon!"); }
             return result;
+        }
+
+        /**
+         * An identifier begins with any non-number, usually. 
+         * See https://people.csail.mit.edu/jaffer/r5rs_4.html
+         */
+         private bool isBeginningofIdentifier(int ch)
+         {
+             return (
+                 (ch >= 'A' && ch <= 'Z') 
+                 || (ch >= 'a' && ch <= 'z')
+                 || (ch == '+')
+                 || (ch == '-')
+                 || (ch == '*')
+                 || (ch == '/')
+                 || (ch == '=')
+            );
+         }
+
+        /**
+         * An identifier ends with a white space, (, ), or .
+         */
+        private bool isEndOfIdentifier(int ch)
+        {
+            if (isWhiteSpace(ch))
+                return true;
+            // else if (ch == '\'')
+                // return true;
+            else if (ch == '(')
+                return true;
+            else if (ch == ')')
+                return true;
+            else if (ch == '.')
+                return true;
+            else
+                return false;
+        }
+
+        private int chToLower(int ch)
+        {
+            if (ch >= 'A' && ch <= 'Z')
+                ch = Char.ToLower((Char) ch);
+            return ch;
         }
 
         /* -- method(s) ------------------------------------ */
@@ -129,17 +176,28 @@ namespace Parse
                 }
         
                 // Identifiers
-                else if (ch >= 'A' && ch <= 'Z'
-                         // or ch is some other valid first character
-                         // for an identifier
-                         ) 
+                // or ch is some other valid first character
+                // for an identifier
+                else if (isBeginningofIdentifier(ch)) 
                 {
-                    // TODO: scan an identifier into the buffer
+                    // scan an identifier into the buffer
+                    int i = 0;
+                    bool done = false;
+                    while (!done) {
+                        // buf[i] = (Char) ch;
+                        buf[i] = (Char) chToLower(ch);
+                        i++;
+                        if (isEndOfIdentifier(In.Peek()))
+                            done = true;
+                        else
+                            ch = In.Read();
+                    }
 
                     // make sure that the character following the integer
                     // is not removed from the input stream
 
-                    return new IdentToken(new String(buf, 0, 0));
+                    // public String(char[] value, int startIndex, int length);
+                    return new IdentToken(new String(buf, 0, i));
                 }
     
                 // Illegal character
