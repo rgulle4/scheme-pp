@@ -90,6 +90,11 @@ namespace Parse
             return ch;
         }
 
+        private bool isNumber(int ch)
+        {
+            return (ch >= '0' && ch <= '9');
+        }
+
         /* -- method(s) ------------------------------------ */
 
         public Token getNextToken()
@@ -159,20 +164,52 @@ namespace Parse
                 // String constants
                 else if (ch == '"')
                 {
-                    // TODO: scan a string into the buffer variable buf
-                    return new StringToken(new String(buf, 0, 0));
+                    // scan a string into the buffer variable buf
+                    int i = 0;
+                    bool done = false;
+                    while (!done)
+                    {
+                        ch = In.Read();
+                        buf[i] = (Char) ch;
+                        i++;
+                        // if (isEndOfString(In.Peek()))
+                        if (In.Peek() == '"')
+                        {
+                            In.Read();
+                            done = true;
+                        }
+                    }                       
+                    return new StringToken(new String(buf, 0, i));
                 }
 
     
                 // Integer constants
-                else if (ch >= '0' && ch <= '9')
+                else if (isNumber(ch))
                 {
-                    int i = ch - '0';
-                    // TODO: scan the number and convert it to an integer
+                    // int theInteger = ch - '0';
+                    // scan the number and convert it to an integer
+                    int i = 0;
+                    bool done = false;
+                    while (!done)
+                    {
+                        buf[i] = (Char) ch;
+                        i++;
+                        if (!isNumber(In.Peek()))
+                            done = true;
+                        else 
+                            ch = (Char) In.Read();
+                    }
+
+                    int result = 0;
+                    for (int j = 0 ; j < i; j++)
+                    {
+                        int thisDigit = buf[j] - '0';
+                        result = result + (thisDigit * (int) Math.Pow(10, i - j - 1));
+                    }
 
                     // make sure that the character following the integer
                     // is not removed from the input stream
-                    return new IntToken(i);
+                    return new IntToken(result);
                 }
         
                 // Identifiers
@@ -183,8 +220,8 @@ namespace Parse
                     // scan an identifier into the buffer
                     int i = 0;
                     bool done = false;
-                    while (!done) {
-                        // buf[i] = (Char) ch;
+                    while (!done) 
+                    {
                         buf[i] = (Char) chToLower(ch);
                         i++;
                         if (isEndOfIdentifier(In.Peek()))
