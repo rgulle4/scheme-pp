@@ -44,6 +44,11 @@ namespace Parse
         private Scanner scanner;
 
         public Parser(Scanner s) { scanner = s; }
+
+        // we only need one instance of each of these
+        public static readonly Nil nilNode = new Nil();
+        public static readonly BoolLit trueNode = new BoolLit(true);
+        public static readonly BoolLit falseNode = new BoolLit(false);
   
         public Node parseExp()
         {
