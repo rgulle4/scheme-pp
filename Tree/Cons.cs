@@ -40,6 +40,8 @@ namespace Tree
         {
             form.print(this, n, p);
         }
+
+        public override bool isPair() { return true; }
     }
 }
 
