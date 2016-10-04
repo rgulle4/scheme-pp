@@ -8,6 +8,8 @@ namespace Parse
 {
     public class Scanner
     {
+        /* -- field(s) ------------------------------------- */
+
         private TextReader In;
 
         // maximum length of strings and identifier
@@ -15,8 +17,33 @@ namespace Parse
         private char[] buf = new char[BUFSIZE];
 
         public Scanner(TextReader i) { In = i; }
-  
-        // TODO: Add any other methods you need
+
+        /* -- option(s) ------------------------------------ */
+
+        private readonly bool PRINT_MESSAGES = false;
+
+        /* -- private method(s) ---------------------------- */
+
+        private void printDebugMsg(Object o) 
+        {
+            if (PRINT_MESSAGES) { Console.WriteLine(o); }
+        }
+
+        private bool isWhiteSpace(int ch) 
+        {
+            bool result = Char.IsWhiteSpace((Char) ch);
+            if (result) { printDebugMsg("Whitespace!"); }
+            return result;
+        }
+
+        private bool isStartOfComment(int ch) 
+        {
+            bool result = (ch == ';');
+            if (result) { printDebugMsg("Semicolon!"); }
+            return result;
+        }
+
+        /* -- method(s) ------------------------------------ */
 
         public Token getNextToken()
         {
@@ -29,9 +56,23 @@ namespace Parse
                 // buffer, but reading individual characters from the
                 // input stream is easier.
                 ch = In.Read();
+                printDebugMsg("[" + (Char) ch + "]");
    
-                // TODO: skip white space and comments
+                // skip white space
+                while (isWhiteSpace(ch))
+                {
+                    ch = In.Read();
+                    printDebugMsg("[" + (Char) ch + "]");
+                }
 
+                // skip comments
+                if (isStartOfComment(ch))
+                {
+                    In.ReadLine();
+                    ch = In.Read();
+                    printDebugMsg("[" + (Char) ch + "]");
+                }
+                
                 if (ch == -1)
                     return null;
         
@@ -91,7 +132,8 @@ namespace Parse
                 else if (ch >= 'A' && ch <= 'Z'
                          // or ch is some other valid first character
                          // for an identifier
-                         ) {
+                         ) 
+                {
                     // TODO: scan an identifier into the buffer
 
                     // make sure that the character following the integer
