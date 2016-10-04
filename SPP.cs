@@ -15,7 +15,10 @@ public class SPP
         if (args.Length > 1 ||
             (args.Length == 1 && ! args[0].Equals("-d")))
         {
-            Console.Error.WriteLine("Usage: mono SPP [-d]");
+            Console.Error.WriteLine("Usage:");
+            Console.Error.WriteLine("\tcat | ./SPP.exe [-d]");
+            Console.Error.WriteLine("Or feed a file:");
+            Console.Error.WriteLine("\tcat somefile.scm | ./SPP.exe [-d]");                        
             return 1;
         }
         
