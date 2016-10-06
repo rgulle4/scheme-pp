@@ -1,5 +1,7 @@
 # Scheme Pretty Printer
 
+by: Roy Gullem, Vincent Rodomista
+
 A pretty-printer for a subset of Scheme in C#. Reads a Scheme
 program from stdin and prints it properly indented to stdout.
 
