@@ -52,17 +52,66 @@ namespace Parse
   
         public Node parseExp()
         {
-            // TODO: write code for parsing an exp
-            return null;
+            Node exp = null;
+
+            Token token = scanner.getNextToken();
+
+            if(token == null)
+            {
+                exp = null;
+            }
+            else if(token.getType() == TokenType.LPAREN)
+            {
+                exp = parseRest();
+            }
+            else if(token.getType() == TokenType.FALSE)
+            {
+                exp = new BoolLit(false);
+            }
+            else if(token.getType() == TokenType.TRUE)
+            {
+                exp = new BoolLit(true);
+            }
+            else if(token.getType() == TokenType.QUOTE)
+            {
+                exp = new Cons(new Ident("'"), new Cons(parseExp(), null);
+            }
+            else if(token.getType() == TokenType.INT)
+            {
+                exp = new IntLit(token.getIntVal());
+            }
+            else if(token.getType() = TokenType.STRING)
+            {
+                exp = new StringLit(token.getStringVal());
+            }
+            else if(token.getType() = TokenType.IDENT)
+            {
+                exp = new Ident(token.getName());
+            }
+            else if(token.getType() = TokenType.RPAREN)
+            {
+                System.out.println("Token Error: )");
+                exp = parseExp();
+            }
+            else if(token.getType() = TokenType.DOT)
+            {
+                System.out.println("Token Error: .");
+                exp = parseExp();
+            }
+            // parsing error
+            else{
+                System.out.println("Token Error Type: " + token.getType());
+            }
+            return exp;
         }
   
         protected Node parseRest()
         {
-            // TODO: write code for parsing a rest
-            return null;
+           //uhhh 
         }
-
-        // TODO: Add any additional methods you might need.
     }
 }
+    
+
+
 
