@@ -6,14 +6,34 @@ namespace Tree
 {
     public class Begin : Special
     {
-        // TODO: Add any fields needed.
- 
-        // TODO: Add an appropriate constructor.
 	public Begin() { }
-
         public override void print(Node t, int n, bool p)
         {
-            // TODO: Implement this function.
+            Node car = t.getCar();
+            Node cdr = t.getCdr();
+
+            t.printIndent(n);
+
+            if(!p) Console.Write("(");
+
+            car.print(n, true);
+            Console.WriteLine();
+
+            n++;
+
+            t.setForm(new Regular());
+
+            while(!cdr.isNull()) {
+                t.printIndent(n);
+                Node cadr = cdr.getCar();
+                cadr.print(0, false);
+                Console.WriteLine();
+                cdr = cdr.getCdr();
+            }
+
+            n--;
+            cdr.print(n, true);
+            Console.WriteLine();
         }
     }
 }

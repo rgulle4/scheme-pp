@@ -66,11 +66,11 @@ namespace Parse
             }
             else if(token.getType() == TokenType.FALSE)
             {
-                exp = new BoolLit(false);
+                exp = falseNode;
             }
             else if(token.getType() == TokenType.TRUE)
             {
-                exp = new BoolLit(true);
+                exp = trueNode;
             }
             else if(token.getType() == TokenType.QUOTE)
             {
@@ -107,7 +107,16 @@ namespace Parse
   
         protected Node parseRest()
         {
-           //uhhh 
+           Token token = scanner.getNextToken();
+           TokenType type = token.getType();
+
+           if (token == null) return null;
+
+           else if(type == TokenType.RPAREN) return nilNode;
+
+           else if(type == TokenType.DOT) return new Cons(parseExp(), parseExp());
+
+           else return new Cons(parseExpWithVal(token), parseRest());
         }
     }
 }

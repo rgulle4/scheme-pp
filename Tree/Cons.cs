@@ -27,9 +27,74 @@ namespace Tree
         // parsing up to the interpreter.
         void parseList()
         {
-            // TODO: implement this function and any helper functions
-            // you might need.
+            if (car.isSymbol())
+            {
+                String identifier = ((Ident)car).ToString();   
+
+                switch(identifier)
+                {
+                    case "begin":
+                        form = new Begin();
+                        break;
+                    case "cond":
+                        form = new Cond();
+                        break;
+                    case "define": 
+                        form = new Define();
+                        break;
+                    case "if": 
+                        form = new If();
+                        break;
+                    case "lambda":
+                        form = new Begin();
+                        break;
+                    case "let":
+                        form = new Cond();
+                        break;
+                    case "quote": 
+                        form = new Define();
+                        break;
+                    case "set": 
+                        form = new If();
+                        break;
+                    default:
+                        form = new Regular();
+                        break;
+                }
+            }
+            else 
+            {
+                form = new Regular();
+            }
         }
+
+        public override Node getCar()
+        {
+            return car;
+        }
+
+        public override Node getCdr()
+        {
+            return cdr;
+        }
+
+        public override Node getCadr(Node n)
+        {
+            return n.getCdr().getCar();
+        }
+
+        public override Node getCddr(Node n)
+        {
+            return n.getCdr().getCdr();
+        }
+
+        public override void indent(int numTabs)
+        {
+            for(int i = 0; i < numTabs; i++){
+                Console.Write("    ")
+            }     
+        }
+
  
         public override void print(int n)
         {
