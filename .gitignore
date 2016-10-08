@@ -277,3 +277,7 @@ __pycache__/
 
 # Include reference binary SPP-reference.exe
 !SPP-reference.exe
+
+# Ignore our test outputs
+test/output*.txt
+
