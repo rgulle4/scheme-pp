@@ -6,14 +6,35 @@ namespace Tree
 {
     public class Cond : Special
     {
-        // TODO: Add any fields needed.
 
-        // TODO: Add an appropriate constructor.
 	public Cond() { }
 
         public override void print(Node t, int n, bool p)
         { 
-            // TODO: Implement this function.
+            Node car = t.getCar(); 
+            Node cdr = t.getCdr();
+
+            t.printIndent(n);
+
+            if (!p) {
+                Console.Write("(");
+            }
+
+            car.print(n, true);
+            Console.WriteLine();
+
+            n++;
+
+            while(!cdr.isNull()) 
+            {
+                t.indent(n);
+                cdr.getCar().print(0, false) //If left paren has not been printed
+                Console.WriteLine();
+                cdr = cdr.getCdr();
+            }
+            n--;
+            cdr.print(n, true);
+            Console.WriteLine();
         }
     }
 }

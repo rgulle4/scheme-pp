@@ -13,7 +13,36 @@ namespace Tree
 
         public override void print(Node t, int n, bool p)
         {
-            // TODO: Implement this function.
+
+            t.indent(n);
+
+            Node car = t.getCar();
+            Node cdr = t.getCdr();
+            Node cddr = cdr.getCdr();
+            Node cadr = cdr.getCar();
+            Node caddr = cdr.getCdr().getCar();
+            Node cdddr = cdr.getCdr().getCdr();
+
+            if(!p)
+            {
+                Console.write("(");
+            }
+
+            car.print(0, true);
+            Console.Write(" ");
+            cadr.print(0, false);
+            Console.Write(" ");
+
+            if(cadr.isPair())
+            {
+                caddr.print(0, false);
+            }
+            else
+            {
+                caddr.print(n++, false);
+                n--;
+            }
+            cdddr.print(n, true);
         }
     }
 }

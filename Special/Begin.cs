@@ -12,7 +12,7 @@ namespace Tree
             Node car = t.getCar();
             Node cdr = t.getCdr();
 
-            t.printIndent(n);
+            t.indent(n);
 
             if(!p) Console.Write("(");
 
