@@ -14,7 +14,7 @@ namespace Tree
             Node car = t.getCar(); 
             Node cdr = t.getCdr();
 
-            t.printIndent(n);
+            t.indent(n);
 
             if (!p) {
                 Console.Write("(");
@@ -28,7 +28,7 @@ namespace Tree
             while(!cdr.isNull()) 
             {
                 t.indent(n);
-                cdr.getCar().print(0, false) //If left paren has not been printed
+                cdr.getCar().print(0, false); //If left paren has not been printed
                 Console.WriteLine();
                 cdr = cdr.getCdr();
             }

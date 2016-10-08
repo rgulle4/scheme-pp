@@ -18,14 +18,13 @@ namespace Tree
 
             Node car = t.getCar();
             Node cdr = t.getCdr();
-            Node cddr = cdr.getCdr();
             Node cadr = cdr.getCar();
             Node caddr = cdr.getCdr().getCar();
             Node cdddr = cdr.getCdr().getCdr();
 
             if(!p)
             {
-                Console.write("(");
+                Console.Write("(");
             }
 
             car.print(0, true);

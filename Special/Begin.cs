@@ -21,10 +21,8 @@ namespace Tree
 
             n++;
 
-            t.setForm(new Regular());
-
             while(!cdr.isNull()) {
-                t.printIndent(n);
+                t.indent(n);
                 Node cadr = cdr.getCar();
                 cadr.print(0, false);
                 Console.WriteLine();

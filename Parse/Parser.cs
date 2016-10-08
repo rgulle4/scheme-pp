@@ -74,33 +74,33 @@ namespace Parse
             }
             else if(token.getType() == TokenType.QUOTE)
             {
-                exp = new Cons(new Ident("'"), new Cons(parseExp(), null);
+                exp = new Cons(new Ident("'"), new Cons(parseExp(), null));
             }
             else if(token.getType() == TokenType.INT)
             {
                 exp = new IntLit(token.getIntVal());
             }
-            else if(token.getType() = TokenType.STRING)
+            else if(token.getType() == TokenType.STRING)
             {
                 exp = new StringLit(token.getStringVal());
             }
-            else if(token.getType() = TokenType.IDENT)
+            else if(token.getType() == TokenType.IDENT)
             {
                 exp = new Ident(token.getName());
             }
-            else if(token.getType() = TokenType.RPAREN)
+            else if(token.getType() == TokenType.RPAREN)
             {
-                System.out.println("Token Error: )");
+                Console.Write("Token Error: )");
                 exp = parseExp();
             }
-            else if(token.getType() = TokenType.DOT)
+            else if(token.getType() == TokenType.DOT)
             {
-                System.out.println("Token Error: .");
+                Console.Write("Token Error: .");
                 exp = parseExp();
             }
             // parsing error
             else{
-                System.out.println("Token Error Type: " + token.getType());
+                Console.Write("Token Error Type: " + token.getType());
             }
             return exp;
         }
@@ -116,7 +116,7 @@ namespace Parse
 
            else if(type == TokenType.DOT) return new Cons(parseExp(), parseExp());
 
-           else return new Cons(parseExpWithVal(token), parseRest());
+           else return new Cons(parseExp(), parseRest());
         }
     }
 }

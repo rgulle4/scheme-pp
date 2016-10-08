@@ -78,20 +78,10 @@ namespace Tree
             return cdr;
         }
 
-        public override Node getCadr(Node n)
-        {
-            return n.getCdr().getCar();
-        }
-
-        public override Node getCddr(Node n)
-        {
-            return n.getCdr().getCdr();
-        }
-
         public override void indent(int numTabs)
         {
             for(int i = 0; i < numTabs; i++){
-                Console.Write("    ")
+                Console.Write("    ");
             }     
         }
 

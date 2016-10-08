@@ -47,6 +47,7 @@ namespace Tree
         public virtual Node getCdr() { return null; }
         public virtual void setCar(Node a) { }
         public virtual void setCdr(Node d) { }
+        public virtual void indent(int n) { }
     }
 }
 

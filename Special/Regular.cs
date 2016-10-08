@@ -13,19 +13,19 @@ namespace Tree
 
             t.indent(n);
 
-            if(!p)                          { Console.Write("(")   }
+            if(!p)                          { Console.Write("(");   }
 
-            if(car.isNull())                { Console.Write("()"); }
+            if(car.isNull())                { Console.Write("()");  }
 
             if(t.isPair() && !cdr.isNull())
             {
-                if(car.isPair())            { car.print(n, false)  }
-                else                        { car.print(n, true)   }
+                if(car.isPair())            { car.print(n, false);  }
+                else                        { car.print(n, true);   }
 
                 Console.Write(" ");
 
-                if(cdr.isPair())            { cdr.print(n, false)  }
-                else                        { cdr.print(n, true)   }
+                if(cdr.isPair())            { cdr.print(n, false);  }
+                else                        { cdr.print(n, true);   }
             }
 
             else if(!t.isPair())

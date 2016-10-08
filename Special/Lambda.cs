@@ -10,11 +10,11 @@ namespace Tree
 
         public override void print(Node t, int n, bool p)
         {
-            car = t.getCar();
-            cdr = t.getCdr();
-            cadr = cdr.getCar();
-            caddr = cdr.getCdr().getCar();
-            cdddr = cdr.getCdr().getCdr();
+            Node car = t.getCar();
+            Node cdr = t.getCdr();
+            Node cadr = cdr.getCar();
+            Node caddr = cdr.getCdr().getCar();
+            Node cdddr = cdr.getCdr().getCdr();
 
             t.indent(n);
 

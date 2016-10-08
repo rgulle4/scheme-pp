@@ -13,7 +13,6 @@ namespace Tree
             Node car = t.getCar();
             Node cdr = t.getCdr();
             Node cadr = cdr.getCar();
-            Node cddr = cdr.getCdr();
             Node caddr = cdr.getCdr().getCar();
             Node cdddr = cdr.getCdr().getCdr();
 

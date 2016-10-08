@@ -20,7 +20,7 @@ namespace Tree
             car.print(n, true);
             Console.WriteLine();
 
-            n++
+            n++;
 
             while(!cdr.isNull())
             {

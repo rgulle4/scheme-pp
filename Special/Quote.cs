@@ -9,8 +9,8 @@ namespace Tree
 
         public override void print(Node t, int n, bool p)
         {
-            car = t.getCar();
-            cdr = t.getCdr();
+            Node car = t.getCar();
+            Node cdr = t.getCdr();
             t.indent(n);
 
             Console.Write("'");
