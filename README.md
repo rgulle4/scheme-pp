@@ -5,6 +5,45 @@ by: Roy Gullem, Vincent Rodomista
 A pretty-printer for a subset of Scheme in C#. Reads a Scheme
 program from stdin and prints it properly indented to stdout.
 
+Usage:
+
+```
+make && cat test1.scm | mono SPP.exe
+```
+
+Given the input file `test1.scm`
+
+```scheme
+; this is a comment line
+
+(display "HeLLo, world! ") ; capitalization of the string should be maintained
+(define dAlMatians ; capitalization of identifier should be converted to lowercase
+101 )     (define 
+     leet1 1337)
+(define some-list '(alice bob carol))
+(define another-list '(alice 'bob carol))
+(define (foo the-atom the-list) ; this is another comment
+  (cond ((null? the-list)  0) ((list? (car the-list)) (+ (foo the-atom (car the-list)) (foo the-atom (cdr the-list)))) ((eqv? (car the-list) the-atom) (+ 1  (foo the-atom (cdr the-list)))) (else (foo the-atom (cdr the-list)))))
+```
+
+the output should be
+
+```scheme
+(display "HeLLo, world! ")
+(define dalmatians 101)
+(define leet1 1337)
+(define some-list '(alice bob carol))
+(define another-list '(alice 'bob carol))
+(define (foo the-atom the-list)
+    (cond
+        ((null? the-list) 0)
+        ((list? (car the-list)) (+ (foo the-atom (car the-list)) (foo the-atom (cdr the-list))))
+        ((eqv? (car the-list) the-atom) (+ 1 (foo the-atom (cdr the-list))))
+        (else (foo the-atom (cdr the-list)))
+    )
+)
+```
+
 ## The basic grammar
 
 The recursive descent parser will only need to recognize the
@@ -25,80 +64,24 @@ rest  ->  )
 
 ## The transformed grammar
 
-TODO: transform our grammar by removing left recursion and common
-left factors.
-
-Some simple examples:
-
-```
-// -- LEFT RECURSION ------------------------ //
-
-X  ->  a
-    |  X b
-
--- inspect derived strings... -----------
--- then write as right-recursive --------
-
-X  ->  a B
-B  -> 
-    |  b B
-```
+For a recursive-descent parser, the grammar must not have left
+recursion and common left factors. We also change it to regular BNF
+syntax.
 
 ```
-// -- COMMON LEFT FACTORS ------------------- //
+exp   ->  ( rest
+       |  #f
+       |  #t
+       |  ' exp 
+       |  integer_constant
+       |  string_constant
+       |  identifier
 
-X  ->  a Y
-    |  a Z
+rest  ->  )
+       |  exp A 
 
--- add a new non-terminal for common a --
-
-X  ->  a T
-T  ->  Y
-    |  Z
-
-```
-
-```
-// -- JAVA EXAMPLE ----------- //
-
-    <Decl>       ->   <VarDecl>
-                  |   <ClassDecl>
-
-    <VarDecl>    ->   <Modifiers>  <Type>  <VarDec>  SEM
-
-    <ClassDecl>  ->   <Modifiers> CLASS ID LBRACE <DeclList> RBRACE
-
-    <DecList>    ->   <Decl>
-                  |   <DecList> <Decl>
-
-    <VarDec>     ->   ID
-                  |   ID Assign <Exp>
-                  |   <VarDec> COMMA ID
-                  |   <VarDec> COMMA ID ASSIGN <Exp>
-
--------------------
-
-    <Decl>       ->  Modifiers <DeclRest>
-    
-    <DeclRest>   ->  <VarDecl>
-                  |  <ClassDecl>
-    
-    <VarDecl>    ->  Type <VarDec> SEM
-    
-    <ClassDecl>  ->  CLASS ID LBRACE <DeclList> RBRACE
-    
-    <DeclList>   ->  <Decl> <DLRest>
-    
-    <DLRest>     ->  epsilon
-                 ->  <DeclList>
-    
-    <VarDec>     ->  ID <OptAssign> <VarDecRest>
-    
-    <OptAssign>  ->  epsilon
-                  |  ASSIGN <Exp>
-
-    <VarDecRest> ->  epsilon
-                  |  COMMA <VarDec>
+A     ->  rest
+       |  . exp )
 ```
 
 ## References (not in this repo)
