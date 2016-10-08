@@ -1,4 +1,3 @@
-// Let -- Parse tree node strategy for printing the special form let
 
 using System;
 
@@ -6,14 +5,34 @@ namespace Tree
 {
     public class Let : Special
     {
-        // TODO: Add any fields needed.
- 
-        // TODO: Add an appropriate constructor.
 	public Let() { }
 
         public override void print(Node t, int n, bool p)
         {
-            // TODO: Implement this function.
+            Node cdr = t.getCdr();
+            Node car = t.getCar();
+            Node cadr = cdr.getCar();
+
+            t.indent(n);
+
+            if(!p)  { Console.Write("("); }
+
+            car.print(n, true);
+            Console.WriteLine();
+
+            n++
+
+            while(!cdr.isNull())
+            {
+                t.indent(n);
+                cadr.print(0, false);
+                Console.WriteLine();
+                cdr = cdr.getCdr();
+            }
+
+            n--;
+            cdr.print(n, true);
+            Console.WriteLine();
         }
     }
 }

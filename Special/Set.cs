@@ -6,14 +6,28 @@ namespace Tree
 {
     public class Set : Special
     {
-        // TODO: Add any fields needed.
- 
-        // TODO: Add an appropriate constructor.
 	public Set() { }
 	
         public override void print(Node t, int n, bool p)
         {
-            // TODO: Implement this function.
+            Node car = t.getCar();
+            Node cdr = t.getCdr();
+            Node cadr = cdr.getCar();
+            Node cddr = cdr.getCdr();
+            Node caddr = cdr.getCdr().getCar();
+            Node cdddr = cdr.getCdr().getCdr();
+
+            t.indent(n);
+
+            if(!p) { Console.Write("("); }
+
+            car.print(n, true);
+            Console.Write(" ");
+            cadr.print(n, true);
+            Console.Write(" ");
+            caddr.print(n, false);
+            cdddr.print(n, true);
+            Console.WriteLine();
         }
     }
 }
