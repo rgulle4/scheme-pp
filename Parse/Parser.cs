@@ -52,17 +52,35 @@ namespace Parse
   
         public Node parseExp()
         {
-            // TODO: write code for parsing an exp
-            return null;
+            Token token = scanner.getNextToken();
+            return parseExp(token);
         }
   
         protected Node parseRest()
         {
-            // TODO: write code for parsing a rest
-            return null;
+            Token token = scanner.getNextToken();
+            return parseRest(token);
         }
 
-        // TODO: Add any additional methods you might need.
+        public Node parseExp(Token token)
+        {
+            Node exp = null;
+            if (token == null)
+                exp = null;
+            else if (token.getType() == TokenType.LPAREN)
+                exp = parseRest();
+            return exp;
+        }
+
+        protected Node parseRest(Token token)
+        {
+            Node rest = null;
+            if (token == null)
+                rest = null;
+            else if (token.getType() == TokenType.RPAREN)
+                rest = nilNode;
+            return rest;
+        }
     }
 }
 
