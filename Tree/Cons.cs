@@ -29,6 +29,8 @@ namespace Tree
         {
             // TODO: implement this function and any helper functions
             // you might need.
+
+            // fall through to default form Regular
             form = new Regular();
         }
  

@@ -14,8 +14,19 @@ namespace Tree
         public override void print(Node t, int n, bool p)
         {
             // TODO: Implement this function.
-            Console.Write('(');
+            if (p == false)
+                printLparen();
+            t.getCar().print(0, true);
+            t.getCdr().print(0, true);
+            printSpace();
+            
         }
+
+        /* -- helpers ------------------------------------------ */
+
+        private void print(Object o) { Console.Write(o); }
+        private void printLparen() { print('('); }
+        private void printSpace() { print(' '); }
     }
 }
 
