@@ -121,7 +121,6 @@ namespace Parse
                 if (isStartOfComment(ch))
                 {
                     In.ReadLine();
-                    ch = In.Read();
                     printDebugMsg("[" + (Char) ch + "]");
                 }
                 
