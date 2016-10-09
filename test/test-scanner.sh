@@ -12,6 +12,11 @@ OUTPUT_FILE_OURS='test/output-ours.txt'
 BINARY_REFERENCE='SPP-reference.exe -d'
 BINARY_OURS='SPP.exe -d'
 
+# cli for input file
+if [ $# == 1 ]; then
+  INPUT_FILE="${1%/}"
+fi
+
 # -- Main --------------------------------------- #
 
 echo "-- Make ---------------------------"
