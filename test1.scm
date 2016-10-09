@@ -4,6 +4,7 @@
 (define dAlMatians ; capitalization of identifier should be converted to lowercase
 101 )     (define
      leet1 1337)
+(a b c) (d (e f) g h)
 (define some-list '(alice bob carol))
 (define another-list '(alice 'bob carol))
 (define (foo the-atom the-list) ; this is another comment
