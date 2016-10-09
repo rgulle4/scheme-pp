@@ -29,6 +29,7 @@ namespace Tree
         {
             // TODO: implement this function and any helper functions
             // you might need.
+            form = new Regular();
         }
  
         public override void print(int n)
@@ -45,26 +46,24 @@ namespace Tree
 
         /* -- Car and cdr overrides ------------------------- */
 
-        // TODO: Implement these.
         // After setCar, a Cons cell needs to be 'parsed' again 
         // using parseList.
 
         public override Node getCar() {
-            // TODO: implement
-            return null;
+            return car;
         }
         
         public override Node getCdr() { 
-           // TODO: implement
-           return null;
+           return cdr;
         }
 
         public override void setCar(Node a) { 
-            // TODO: implement
+            car = a;
+            parseList();
         }
 
         public override void setCdr(Node d) { 
-            // TODO: implement
+            cdr = d;
         }
     }
 }

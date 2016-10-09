@@ -6,15 +6,19 @@
 //
 // Parses the language
 //
-//   exp  ->  ( rest
-//         |  #f
-//         |  #t
-//         |  ' exp
-//         |  integer_constant
-//         |  string_constant
-//         |  identifier
-//    rest -> )
-//         |  exp+ [. exp] )
+//   exp       ->  ( rest
+//              |  #f
+//              |  #t
+//              |  ' exp 
+//              |  integer_constant
+//              |  string_constant
+//              |  identifier
+//
+//   rest      ->  )
+//              |  exp rest_tail 
+//
+//   rest_tail ->  rest
+//              |  . exp )
 //
 // and builds a parse tree.  Lists of the form (rest) are further
 // `parsed' into regular lists and special forms in the constructor
@@ -49,7 +53,8 @@ namespace Parse
         public static readonly Nil nilNode = new Nil();
         public static readonly BoolLit trueNode = new BoolLit(true);
         public static readonly BoolLit falseNode = new BoolLit(false);
-  
+
+        
         public Node parseExp()
         {
             Token token = scanner.getNextToken();
@@ -62,24 +67,112 @@ namespace Parse
             return parseRest(token);
         }
 
-        public Node parseExp(Token token)
+        private Node parseRestTail()
         {
-            Node exp = null;
-            if (token == null)
-                exp = null;
-            else if (token.getType() == TokenType.LPAREN)
-                exp = parseRest();
-            return exp;
+            Token token = scanner.getNextToken();
+            return parseRestTail(token);
         }
 
+        // -- parse the grammar -------------------------------- //
+
+        // exp       ->  ( rest
+        //            |  #f
+        //            |  #t
+        //            |  ' exp 
+        //            |  integer_constant
+        //            |  string_constant
+        //            |  identifier
+        public Node parseExp(Token token)
+        {
+            if (token == null)
+                return null;
+            else if (token.getType() == TokenType.LPAREN)
+                return parseRest();
+            else if (token.getType() == TokenType.FALSE)
+                return falseNode;
+            else if (token.getType() == TokenType.TRUE)
+                return trueNode;
+            else if (token.getType() == TokenType.QUOTE)
+                return quoteNode();
+            else if (token.getType() == TokenType.INT)
+                return intLiteral(token);
+            else if (token.getType() == TokenType.STRING)
+                return stringLiteral(token);
+            else if (token.getType() == TokenType.IDENT)
+                return ident(token);
+            return null;
+        }
+
+        // rest      ->  )
+        //            |  exp rest_tail 
         protected Node parseRest(Token token)
         {
-            Node rest = null;
             if (token == null)
-                rest = null;
+                return null;
             else if (token.getType() == TokenType.RPAREN)
-                rest = nilNode;
-            return rest;
+                return nilNode;
+            else
+            {
+                Node exp = parseExp(token);
+                Node rest_tail = parseRestTail();
+                if (exp == null || rest_tail == null)
+                    return null;
+                return new Cons(exp, rest_tail);
+            }
+            //return null;
+        }
+
+        // rest_tail ->  . exp )
+        //            |  rest
+        private Node parseRestTail(Token token)
+        {
+            if (token == null)
+                return null;
+            else if (token.getType() == TokenType.DOT)
+            {
+                Node exp = parseExp();
+                if (exp == null)
+                    return null;
+                // Now we look ahead 1
+                Token nextToken = scanner.getNextToken();
+                while (nextToken != null && !isRparen(token))
+                {
+                    nextToken = scanner.getNextToken();
+                }
+                return exp;
+            }
+            else
+                return parseRest(token);
+            //return null;
+        }
+
+        // -- helpers for quote, literal, and ident nodes ----- //
+
+        private Node quoteNode()
+        {
+            // TODO
+            return null;
+        }
+
+        private Node intLiteral(Token token)
+        {
+            return new IntLit(token.getIntVal());
+        }
+
+        private Node stringLiteral(Token token)
+        {
+            return new StringLit(token.getStringVal());
+        }
+
+        private Node ident(Token token)
+        {
+            return new Ident(token.getName());
+        }
+
+        // -- token type helpers ------------------------------- //
+        private bool isRparen(Token token)
+        {
+            return token.getType() ==TokenType.RPAREN;
         }
     }
 }
