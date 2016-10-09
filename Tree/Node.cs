@@ -1,5 +1,7 @@
 // Node -- Base class for parse tree node objects
 
+using System;
+
 namespace Tree
 {
     public class Node
@@ -40,13 +42,32 @@ namespace Tree
         public virtual bool isNull()   { return false; }  // Nil
         public virtual bool isPair()   { return false; }  // Cons
 
-        // TODO: Report an error in these default methods and implement them
-        // in class Cons.  After setCar, a Cons cell needs to be `parsed' again
+        // These virtual methods are overridden in class cons. 
+        // After setCar, a Cons cell needs to be 'parsed' again 
         // using parseList.
-        public virtual Node getCar() { return null; }
-        public virtual Node getCdr() { return null; }
-        public virtual void setCar(Node a) { }
-        public virtual void setCdr(Node d) { }
+        public virtual Node getCar() {
+            writeError("Node ERROR: getCar() invalid bc not cons"); 
+            return null; 
+        }
+
+        public virtual Node getCdr() { 
+            writeError("Node ERROR: getCdr() invalid bc not cons"); 
+            return null; 
+        }
+
+        public virtual void setCar(Node a) { 
+            writeError("Node ERROR: setCar(Node a) invalid bc not cons");
+        }
+
+        public virtual void setCdr(Node d) { 
+            writeError("Node ERROR: setCdr(Node d) invalid bc not cons");
+        }
+
+        /* -- Helper method(s) ------------------------------ */
+
+        private void writeError(String str) {
+            Console.Error.WriteLine(str);
+        }
     }
 }
 

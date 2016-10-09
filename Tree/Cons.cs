@@ -42,6 +42,30 @@ namespace Tree
         }
 
         public override bool isPair() { return true; }
+
+        /* -- Car and cdr overrides ------------------------- */
+
+        // TODO: Implement these.
+        // After setCar, a Cons cell needs to be 'parsed' again 
+        // using parseList.
+
+        public override Node getCar() {
+            // TODO: implement
+            return null;
+        }
+        
+        public override Node getCdr() { 
+           // TODO: implement
+           return null;
+        }
+
+        public override void setCar(Node a) { 
+            // TODO: implement
+        }
+
+        public override void setCdr(Node d) { 
+            // TODO: implement
+        }
     }
 }
 
