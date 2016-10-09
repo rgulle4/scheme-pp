@@ -150,8 +150,11 @@ namespace Parse
 
         private Node quoteNode()
         {
-            // TODO
-            return null;
+            Node exp = parseExp();
+            if (exp == null)
+                return null;
+            return new Cons(new Ident("quote"), 
+                            new Cons(exp, nilNode));
         }
 
         private Node intLiteral(Token token)
