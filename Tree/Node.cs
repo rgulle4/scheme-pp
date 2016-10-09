@@ -30,6 +30,10 @@ namespace Tree
             print(n);
         }
 
+        // This is implemented in Ident... used to identify Special forms
+        public virtual String getName() { return ""; }
+        
+
         // For parsing Cons nodes, for printing trees, and later for
         // evaluating them, we need some helper functions that test
         // the type of a node and that extract some information.

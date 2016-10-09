@@ -23,6 +23,7 @@ namespace Tree
         }
 
         public override bool isSymbol() { return true; }
+        public override string getName() { return name; }
     }
 }
 
