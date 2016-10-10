@@ -275,6 +275,9 @@ __pycache__/
 # Ignore tmp/ directory made by reference test scripts
 **/tmp/
 
+# Ignore SPP.exe
+SPP.exe
+
 # Include reference binary SPP-reference.exe
 !SPP-reference.exe
 
