@@ -17,6 +17,7 @@ namespace Tree
         }
 
         public static void print(Node t, int n, bool p) { t.print(n, p); }
+        public static void print(Node t, int n, bool p, int i) { t.print(n, p); }
 
         public static void printCdr(Node t, int n)
         {
