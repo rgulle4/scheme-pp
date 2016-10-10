@@ -6,14 +6,18 @@ namespace Tree
 {
     public class Set : Special
     {
-        // TODO: Add any fields needed.
- 
-        // TODO: Add an appropriate constructor.
 	public Set() { }
 	
         public override void print(Node t, int n, bool p)
-        {
-            // TODO: Implement this function.
+        { 
+            if(!p)
+            {
+                Node.indent(n);
+                Console.Write("(set!"); 
+                Node.printCdr(t.getCdr(), -(Math.Abs(n) + 4));
+                Console.WriteLine();
+            }
+            else { Node.print(t, n, true); }   
         }
     }
 }

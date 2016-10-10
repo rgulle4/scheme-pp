@@ -6,14 +6,36 @@ namespace Tree
 {
     public class Define : Special
     {
-        // TODO: Add any fields needed.
-
-        // TODO: Add an appropriate constructor.
 	public Define() { }
 
         public override void print(Node t, int n, bool p)
         {
-            // TODO: Implement this function.
+            if(!p)
+            {
+                Node.indent(n);
+                Console.Write("(define");
+                if(t.getCdr().isPair())
+                {
+                    if(t.getCdr().getCar().isPair())
+                    {
+                        Console.Write(' ');
+                        Node.print(t.getCdr().getCar(), -(Math.Abs(n) + 4), false);
+                        Console.WriteLine();
+                        Node.printCdr(t.getCdr().getCdr(), Math.Abs(n) + 4);
+                    }
+                    else
+                    {
+                        Node.print(t.getCdr(), -(Math.Abs(n) + 4), true);
+                        Console.WriteLine();
+                    }
+                }
+                else
+                {
+                    Node.printCdr(t.getCdr(), -(Math.Abs(n) + 4));
+                    Console.WriteLine();
+                }
+            }
+            else { Node.print(t, n, true); }
         }
     }
 }

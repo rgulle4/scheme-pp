@@ -1,38 +1,3 @@
-// Parser -- the parser for the Scheme printer and interpreter
-//
-// Defines
-//
-//   class Parser;
-//
-// Parses the language
-//
-//   exp  ->  ( rest
-//         |  #f
-//         |  #t
-//         |  ' exp
-//         |  integer_constant
-//         |  string_constant
-//         |  identifier
-//    rest -> )
-//         |  exp+ [. exp] )
-//
-// and builds a parse tree.  Lists of the form (rest) are further
-// `parsed' into regular lists and special forms in the constructor
-// for the parse tree node class Cons.  See Cons.parseList() for
-// more information.
-//
-// The parser is implemented as an LL(0) recursive descent parser.
-// I.e., parseExp() expects that the first token of an exp has not
-// been read yet.  If parseRest() reads the first token of an exp
-// before calling parseExp(), that token must be put back so that
-// it can be reread by parseExp() or an alternative version of
-// parseExp() must be called.
-//
-// If EOF is reached (i.e., if the scanner returns a NULL) token,
-// the parser returns a NULL tree.  In case of a parse error, the
-// parser discards the offending token (which probably was a DOT
-// or an RPAREN) and attempts to continue parsing with the next token.
-
 using System;
 using Tokens;
 using Tree;
@@ -45,24 +10,71 @@ namespace Parse
 
         public Parser(Scanner s) { scanner = s; }
 
-        // we only need one instance of each of these
-        public static readonly Nil nilNode = new Nil();
-        public static readonly BoolLit trueNode = new BoolLit(true);
-        public static readonly BoolLit falseNode = new BoolLit(false);
+        // Actual execution to parse an expression, calls the version of parseExp
+        // that takes a parameter token T
+        public Node parseExp()      { return parseExp(scanner.getNextToken()); }
   
-        public Node parseExp()
+        // Actual execution to parse the remainder of an expression, calls the version of 
+        // parseRest that takes a parameter token T
+        protected Node parseRest()  { return parseRest(scanner.getNextToken()); }
+
+        // Takes a parameter token T and deciphers its type. Returns a portion of the program string
+        // corresponding to the token type and value
+        public Node parseExp(Token t)
         {
-            // TODO: write code for parsing an exp
-            return null;
-        }
-  
-        protected Node parseRest()
-        {
-            // TODO: write code for parsing a rest
-            return null;
+            if (t == null) { return null; }
+            else if (t.getType() == TokenType.LPAREN) { return parseRest(); }
+            else if (t.getType() == TokenType.TRUE) { return new BoolLit(true); }
+            else if (t.getType() == TokenType.FALSE) { return new BoolLit(false); }
+            else if (t.getType() == TokenType.QUOTE)
+            {
+                Node exp = parseExp();
+                if (exp == null)
+                {
+                    Console.Error.WriteLine("End of file");
+                    return null;
+                }
+                return new Cons(new Ident("quote"), new Cons(exp, new Nil()));
+            }
+            else if (t.getType() == TokenType.INT) { return new IntLit(t.getIntVal()); }
+            else if (t.getType() == TokenType.STRING) { return new StringLit(t.getStringVal()); }
+            else if (t.getType() == TokenType.IDENT) { return new Ident(t.getName()); }
+            else
+                Console.WriteLine("Invalid input");
+            return parseExp();
         }
 
-        // TODO: Add any additional methods you might need.
+        // Is called if the last token read was a LPAREN. First checks to see if the next token is
+        // an RPAREN, signifying nil. If not, it looks ahead to the next token and parses it. 
+        // Finally looks ahead once more to check if the expr is ready to be terminated or if
+        // it needs to be constructed into another pair.
+        protected Node parseRest(Token t)
+        {
+            if (t.getType() == TokenType.RPAREN) { return new Nil(); }
+            else if(t == null) { return null; }
+            else 
+            {
+                Node next = parseExp(t);
+                if (next == null) { return null; }
+                else 
+                {
+                    Node lookahead = parseLookahead();
+                    if (lookahead == null) { return null; }
+                    return new Cons(next, lookahead);
+                }
+            }
+        }
+
+        // Is called in parseRest() to look ahead and check if the construction of a new pair is 
+        // necessary. Checks if there is a dot signifying a list and, if there is, recursively calls 
+        // parseExp() to find the next member of the list. 
+        protected Node parseLookahead()
+        {
+            Token next = scanner.getNextToken();
+            if (next == null)                        { return null;            }
+            else if(next.getType() == TokenType.DOT) { return parseExp();      }
+            else                                     { return parseRest(next); }
+        }
     }
 }
 

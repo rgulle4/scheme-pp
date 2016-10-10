@@ -6,14 +6,17 @@ namespace Tree
 {
     public class Let : Special
     {
-        // TODO: Add any fields needed.
- 
-        // TODO: Add an appropriate constructor.
 	public Let() { }
 
         public override void print(Node t, int n, bool p)
         {
-            // TODO: Implement this function.
+            if(!p)
+            {
+                Node.indent(n);
+                Console.Write("(let");
+                Node.printCdr(t.getCdr(), Math.Abs(n) + 4);
+            }
+            else { Node.print(t, n, true); }
         }
     }
 }
