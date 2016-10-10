@@ -14,15 +14,18 @@ namespace Tree
             {
                 Node.indent(n);
                 Console.Write('(');
-                Node.print(t.getCar(), -(Math.Abs(n) + 4), false);
-                Node.printCdr(t.getCdr(), -(Math.Abs(n) + 4));
-                if (n >= 0) { Console.WriteLine(); }
+                while(t.getCar() != null)
+                {
+                    Node.print(t.getCar(), n, false);
+                    t = t.getCdr();
+                    if(t.getCar() != null) {Console.Write(' ');}
+                }
+                Console.Write(')');
             }
             else
             {
                 if (n < 0) { Console.Write(' '); }
                 Node.print(t.getCar(), n, false);
-                Node.printCdr(t.getCdr(), n);
             }
         }
     }
