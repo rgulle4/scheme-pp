@@ -45,8 +45,8 @@ namespace Tree
                 form = new Quote();
             else if (isSet(car))
                 form = new Set();
-            // fall through to default form Regular
-            form = new Regular();
+            else
+                form = new Regular();
         }
  
         public override void print(int n)
