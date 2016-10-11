@@ -24,6 +24,7 @@ namespace Tree
                    t = t.getCdr();
                    if(n > 0) { Node.print(t.getCar(), n - 4, false); }
                    else { Node.print(t.getCar(), n, false); }
+                   Console.WriteLine();
                    t = t.getCdr();
                    while(t.getCdr() != null)
                    {
