@@ -5,11 +5,11 @@ using System;
 namespace Tree
 {
     // ;; Two ways to print define:
-    // SINGLE LINE WHEN DEFINING A VARIABLE
+    // ;; SINGLE LINE WHEN DEFINING A VARIABLE
     // 
     // (define x 3)
     // 
-    // BREAK THE LINE AND INDENT WHEN DEFINING FUNCTION
+    // ;; BREAK THE LINE AND INDENT WHEN DEFINING FUNCTION
     // 
     // (define (foo n)
     //     (define x 3)
@@ -24,22 +24,20 @@ namespace Tree
 	    public Define() { }
 
         //cons print overridden by define print because it starts with a special
-        // TODO: Implement this function.
         public override void print(Node t, int n, bool p)
         {
             if (!p)
             {
-                Console.WriteLine("-- Define.print(Node t, int n, p=false) -------");
-                Node.indent(n);
-               //Manually printing ( and car
+                Console.WriteLine("\n;-- Define.print(p=false) --\n");
+                //Manually printing ( and car
                 Console.Write("(define");
                 //if cdr of cons node (everything after define) is another cons node
                 if (t.getCdr().isPair())
                 {
                     //check if its t.cdr.car (item after define) is a cons node, if so print it, newline, print the rest
-                    Console.WriteLine("-- Define.... t.getCdr().ispair() == true ------");
                     if (t.getCdr().getCar().isPair())
                     {
+                        Console.WriteLine("\n;---- t.getCdr().getCar().isPair() --\n");                    
                         Console.Write(' ');
                         //n negative to print on same line
                         Node.print(t.getCdr().getCar(), -(Math.Abs(n) + 4), false);
@@ -57,15 +55,15 @@ namespace Tree
                 }
                 else
                 {
+                    Console.WriteLine("\n;-- Define.print(p=true) --\n");                    
                     //if not another cons node, dot or nil. negative n so that it wont indent or make a new line
-                    Console.WriteLine("-- Define.... t.getCdr().ispair() == false ------");
                     Node.printCdr(t.getCdr(), -(Math.Abs(n) + 4));
                     Console.WriteLine();
                 }
             }
             else 
             { 
-                Console.WriteLine("-- Define.print(Node t, int n, p=true) --------------");                
+                Console.WriteLine("\n;-- Define.print(p=true) --\n");            
                 Node.print(t, n, true); 
             }
         }
