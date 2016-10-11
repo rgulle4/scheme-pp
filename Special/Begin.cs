@@ -10,14 +10,34 @@ namespace Tree
 
         public override void print(Node t, int n, bool p)
         {
-            if (!p)
+            if (!p && n >= 0 )
             {
                 Node.indent(n);
-                Console.WriteLine("(begin");
-                Node.printCdr(t.getCdr(), Math.Abs(n) + 4);
+                Console.Write("(");
+                Node.print(t.getCar(), n, false);
+                Console.WriteLine();
+                t = t.getCdr();
+                while(t.getCar() != null)
+                {
+                    Node.print(t.getCar(), n + 4, false);
+                    t = t.getCdr();
+                }
+                
+                Console.Write(')');
+
+            }
+            else if(!p && n < 0)
+            {
+                Node.indent(Math.Abs(n));
+                while(t.getCar() != null) 
+                {
+                    Node.print(t.getCar(), n, false);
+                    t = t.getCdr();
+                    if(t.getCar() != null) { Console.Write(' '); }
+                }
+                Console.Write(')');
             }
             else { Node.print(t, n, true); }
         }
     }
 }
-
