@@ -26,7 +26,6 @@ namespace Tree
         //cons print overridden by define print because it starts with a special
        public override void print(Node t, int n, bool p)
        {
-
         if(!p)
         {
             if(t.getCdr().isPair())
@@ -57,7 +56,6 @@ namespace Tree
                     t = t.getCdr();
                     if(t.getCar() != null) { Console.Write(" "); }
                 }
-                
                 Console.WriteLine(')');
                }
            }

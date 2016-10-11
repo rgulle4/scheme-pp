@@ -1,5 +1,5 @@
 ; this is a comment line
-
+(define quoted-list (quote (1 . 2)))
 (display "HeLLo, world! ") ; capitalization of the string should be maintained
 (define dAlMatians ; capitalization of identifier should be converted to lowercase
 101 )     (define
