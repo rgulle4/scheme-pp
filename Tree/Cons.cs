@@ -27,8 +27,26 @@ namespace Tree
         // parsing up to the interpreter.
         void parseList()
         {
-            // TODO: implement this function and any helper functions
+            // Implement this function and any helper functions
             // you might need.
+            if (isBegin(car))
+                form = new Begin();
+            else if (isCond(car))
+                form = new Cond();
+            else if (isDefine(car))
+                form = new Define();
+            else if (isIf(car))
+                form = new If();
+            else if (isLambda(car))
+                form = new Lambda();
+            else if (isLet(car))
+                form = new Let();
+            else if (isQuote(car)) 
+                form = new Quote();
+            else if (isSet(car))
+                form = new Set();
+            else
+                form = new Regular();
         }
  
         public override void print(int n)
@@ -42,6 +60,56 @@ namespace Tree
         }
 
         public override bool isPair() { return true; }
+
+        /* -- Car and cdr overrides ------------------------- */
+
+        // After setCar, a Cons cell needs to be 'parsed' again 
+        // using parseList.
+
+        public override Node getCar() {
+            return car;
+        }
+        
+        public override Node getCdr() { 
+           return cdr;
+        }
+
+        public override void setCar(Node a) { 
+            car = a;
+            parseList();
+        }
+
+        public override void setCdr(Node d) { 
+            cdr = d;
+        }
+
+        /* -- Helpers to determine special types --------------- */
+        private bool isBegin(Node node) {
+            return (node.getName().Equals("begin"));
+        }
+
+        private bool isCond(Node node) {
+            return (node.getName().Equals("cond"));
+        }
+
+        private bool isDefine(Node node) {
+            return (node.getName().Equals("define"));
+        }
+        private bool isIf(Node node) {
+            return (node.getName().Equals("if"));
+        }
+        private bool isLambda(Node node) {
+            return (node.getName().Equals("lambda"));
+        }
+        private bool isLet(Node node) {
+            return (node.getName().Equals("let"));
+        }
+        private bool isQuote(Node node) {
+            return (node.getName().Equals("quote"));
+        }
+        private bool isSet(Node node) {
+            return (node.getName().Equals("set"));
+        }
     }
 }
 
