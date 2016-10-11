@@ -10,36 +10,14 @@ namespace Tree
 
         public static void indent(int spaces)
         {
-            for(int i = 0; i < spaces; i++) 
-            { 
+            for(int i = 0; i < spaces; i++)
+            {
                 Console.Write(" ");
             }
         }
 
         public static void print(Node t, int n, bool p) { t.print(n, p); }
         public static void print(Node t, int n, bool p, int i) { t.print(n, p); }
-
-        public static void printCdr(Node t, int n)
-        {
-            if (t.isPair() || t.isNull()) { print(t, n, true); }
-            else
-            {
-                if (n >= 0)
-                {
-                    indent(n);
-                    Console.Write(". ");
-                    print(t, -Math.Abs(n), false);
-                    indent(n - 4);
-                    Console.Write(')');
-                }
-                else
-                {
-                    Console.Write(" . ");
-                    print(t, -Math.Abs(n), false);
-                    Console.Write(')');
-                }
-            }
-        }
 
         public virtual bool isBool()   { return false; }  // BoolLit
         public virtual bool isNumber() { return false; }  // IntLit
