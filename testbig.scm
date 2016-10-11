@@ -9,13 +9,16 @@
 (define another-list '(alice 'bob carol))
 (define (foo the-atom the-list) ; this is another comment
 	(cond ((null? the-list)  0) ((list? (car the-list)) (+ (foo the-atom (car the-list)) (foo the-atom (cdr the-list)))) ((eqv? (car the-list) the-atom) (+ 1  (foo the-atom (cdr the-list)))) (else (foo the-atom (cdr the-list)))))
-
 (define (fac n)
-(let ((x 3)
-		(y 5))
-	(* x y))
+(if (= n 0)
+1
+(* n (fac (- n 1)))))
+;(define (fac n)
+		;(y 5))
+	;(* x y))
+;(let ((x 3)
 (define some-list '(coffee tea))
-(if (b= n 0) 1 (b* n (fac (b- n 1)))))
+(if (b= n 0) 1 (b* n (fac (b- n 1))))
 (fac 5)
 (begin (set! x 5) (+ x 1)) 
 ((lambda (x y) (* x y)) 3 5)
