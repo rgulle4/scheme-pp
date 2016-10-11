@@ -25,7 +25,7 @@ namespace Tree
             }
             else if(!p && n<0)
             {
-                n = n-1;
+                n = -(Math.Abs(n) - 1);
                 Node.indent(n);
                 Console.Write('(');
                 while(t.getCar() != null)

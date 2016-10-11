@@ -13,24 +13,28 @@ namespace Tree
 
         public override void print(Node t, int n, bool p)
         {
-            if(!p)
+            if(t.getCdr().isPair())
             {
-                Node.indent(n);
-                Console.Write("(lambda");
-                if(t.getCdr().isPair())
+                if(t.getCdr().getCar().isPair())
                 {
-                    Console.Write(" ");
-                    Node.print(t.getCdr().getCar(), -(Math.Abs(n) + 4), false);
-                    Console.WriteLine();
-                    Node.printCdr(t.getCdr().getCdr(), Math.Abs(n) + 4);
-                }
-                else
-                {
-                    Node.printCdr(t.getCdr(), -(Math.Abs(n) + 4));
-                    Console.WriteLine();
-                }
-            }
-            else { Node.print(t, n, true); }
+                   Node.indent(n);
+                   Console.Write('(');
+                   Node.print(t.getCar(), n - 4, false);
+                   Console.Write(" ");
+                   t = t.getCdr();
+                   if(n > 0) { Node.print(t.getCar(), n - 4, false); }
+                   else { Node.print(t.getCar(), n, false); }
+                   t = t.getCdr();
+                   while(t.getCdr() != null)
+                   {
+                       Node.print(t.getCar(), n+4, false);
+                       t = t.getCdr();
+                       if(t.getCdr() != null) {Console.WriteLine();}
+                   }
+                   Node.indent(n);
+                   Console.WriteLine(')');
+               }
+           }
         }
     }
 }
