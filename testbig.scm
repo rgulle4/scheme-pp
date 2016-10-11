@@ -14,7 +14,8 @@
 (let ((x 3)
 		(y 5))
 	(* x y))
-
+(define some-list '(coffee tea))
 (if (b= n 0) 1 (b* n (fac (b- n 1)))))
 (fac 5)
 (begin (set! x 5) (+ x 1)) 
+((lambda (x y) (* x y)) 3 5)
