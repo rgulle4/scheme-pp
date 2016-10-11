@@ -16,7 +16,7 @@ namespace Tree
                 Console.Write('(');
                 while(t.getCar() != null)
                 {
-                    Node.print(t.getCar(), n-1, false);
+                    Node.print(t.getCar(), -(Math.Abs(n)), false);
                     t = t.getCdr();
                     if(t.getCar() != null) {Console.Write(' ');}
                 }
