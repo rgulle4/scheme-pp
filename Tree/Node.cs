@@ -1,4 +1,5 @@
 // Node -- Base class for parse tree node objects
+using System;
 
 namespace Tree
 {
