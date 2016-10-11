@@ -16,7 +16,7 @@ namespace Tree
                 Console.Write('(');
                 while(t.getCar() != null)
                 {
-                    Node.print(t.getCar(), -(Math.Abs(n)), false);
+                    Node.print(t.getCar(), -(1 + Math.Abs(n)), false);
                     t = t.getCdr();
                     if(t.getCar() != null) {Console.Write(' ');}
                 }
@@ -25,6 +25,7 @@ namespace Tree
             }
             else if(!p && n<0)
             {
+                n = n-1;
                 Node.indent(n);
                 Console.Write('(');
                 while(t.getCar() != null)

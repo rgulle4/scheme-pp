@@ -11,6 +11,10 @@
 	(cond ((null? the-list)  0) ((list? (car the-list)) (+ (foo the-atom (car the-list)) (foo the-atom (cdr the-list)))) ((eqv? (car the-list) the-atom) (+ 1  (foo the-atom (cdr the-list)))) (else (foo the-atom (cdr the-list)))))
 
 (define (fac n)
+(let ((x 3)
+		(y 5))
+	(* x y))
+
 (if (b= n 0) 1 (b* n (fac (b- n 1)))))
 (fac 5)
 (begin (set! x 5) (+ x 1)) 

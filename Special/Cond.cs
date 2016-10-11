@@ -9,14 +9,24 @@ namespace Tree
 	public Cond() { }
 
         public override void print(Node t, int n, bool p)
-        { 
-            if(!p)
+        {
+            if (!p && n >= 0 )
             {
                 Node.indent(n);
-                Console.WriteLine("(cond"); 
-                Node.printCdr(t.getCdr(), Math.Abs(n) + 4);
+                Console.Write("(");
+                Node.print(t.getCar(), n - 4, false);
+                Console.WriteLine();
+                t = t.getCdr();
+                while(t.getCar() != null)
+                {
+                    Node.print(t.getCar(), n + 4, false);
+                    t = t.getCdr();
+                }
+                Node.indent(n);
+                Console.WriteLine(')');
+
             }
-            else { Node.print(t, n, true); }   
+            else { Node.print(t, n, true); }
         }
     }
 }

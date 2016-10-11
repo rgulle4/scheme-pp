@@ -26,17 +26,6 @@ namespace Tree
                 Console.Write(')');
 
             }
-            else if(!p && n < 0)
-            {
-                Node.indent(Math.Abs(n));
-                while(t.getCar() != null) 
-                {
-                    Node.print(t.getCar(), n, false);
-                    t = t.getCdr();
-                    if(t.getCar() != null) { Console.Write(' '); }
-                }
-                Console.Write(')');
-            }
             else { Node.print(t, n, true); }
         }
     }
