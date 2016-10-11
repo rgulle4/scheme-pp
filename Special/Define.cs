@@ -28,7 +28,7 @@ namespace Tree
         {
             if (!p)
             {
-                Console.WriteLine("\n;-- Define.print(p=false) --\n");
+                // Console.WriteLine("\n;-- Define.print(p=false) --\n");
                 //Manually printing ( and car
                 Console.Write("(define");
                 //if cdr of cons node (everything after define) is another cons node
@@ -37,7 +37,7 @@ namespace Tree
                     //check if its t.cdr.car (item after define) is a cons node, if so print it, newline, print the rest
                     if (t.getCdr().getCar().isPair())
                     {
-                        Console.WriteLine("\n;---- t.getCdr().getCar().isPair() --\n");                    
+                        // Console.WriteLine("\n;---- t.getCdr().getCar().isPair() --\n");                    
                         Console.Write(' ');
                         //n negative to print on same line
                         Node.print(t.getCdr().getCar(), -(Math.Abs(n) + 4), false);
@@ -55,7 +55,7 @@ namespace Tree
                 }
                 else
                 {
-                    Console.WriteLine("\n;-- Define.print(p=true) --\n");                    
+                    // Console.WriteLine("\n;-- Define.print(p=true) --\n");                    
                     //if not another cons node, dot or nil. negative n so that it wont indent or make a new line
                     Node.printCdr(t.getCdr(), -(Math.Abs(n) + 4));
                     Console.WriteLine();
@@ -63,7 +63,7 @@ namespace Tree
             }
             else 
             { 
-                Console.WriteLine("\n;-- Define.print(p=true) --\n");            
+                // Console.WriteLine("\n;-- Define.print(p=true) --\n");            
                 Node.print(t, n, true); 
             }
         }

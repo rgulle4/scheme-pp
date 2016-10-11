@@ -13,3 +13,4 @@
 (define (fac n)
 (if (b= n 0) 1 (b* n (fac (b- n 1)))))
 (fac 5)
+(begin (set! x 5) (+ x 1)) 
