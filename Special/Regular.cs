@@ -18,7 +18,10 @@ namespace Tree
                 {
                     Node.print(t.getCar(), -(1 + Math.Abs(n)), false);
                     t = t.getCdr();
-                    if(t.getCar() != null) {Console.Write(' ');}
+                    if(t.getCar() != null) 
+                    {
+                        Console.Write(' ');
+                    }                
                 }
                 Console.Write(')');
                 Console.WriteLine();
@@ -36,6 +39,7 @@ namespace Tree
                 }
                 Console.Write(')');
             }
+            
         }
     }
 }

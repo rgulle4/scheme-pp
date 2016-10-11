@@ -135,7 +135,7 @@ namespace Parse
                     return null;
                 // Now we look ahead 1
                 Token nextToken = scanner.getNextToken();
-                while (nextToken != null && !isRparen(token))
+                while (nextToken != null && !isRparen(nextToken))
                 {
                     nextToken = scanner.getNextToken();
                 }
